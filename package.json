@@ -1,0 +1,17 @@
+{
+  "name": "@game-dev-rta-club/atomic-documantation",
+  "version": "0.1.0",
+  "description": "Atomic documentation skills and their version-pinned Sonner reader",
+  "type": "module",
+  "license": "MIT",
+  "repository": "github:game-dev-rta-club/atomic-documantation",
+  "engines": { "node": ">=24" },
+  "os": ["darwin", "win32", "linux"],
+  "bin": { "sonner": "implementation/cli/sonner.mjs" },
+  "files": ["implementation/cli", "implementation/sonner", "skills", "LICENSE", "THIRD_PARTY_NOTICES.md"],
+  "scripts": {
+    "build": "node scripts/build-skills.mjs",
+    "check": "node scripts/build-skills.mjs --check",
+    "test": "node --test tests/*.test.mjs"
+  }
+}
