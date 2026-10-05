@@ -5,7 +5,7 @@ import { createHash, randomUUID } from 'node:crypto';
 import { mkdir, mkdtemp, readFile, realpath, rename, rm, stat, writeFile } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
-import { pathToFileURL } from 'node:url';
+import { fileURLToPath } from 'node:url';
 import { promisify } from 'node:util';
 
 const exec = promisify(execFile);
@@ -83,7 +83,13 @@ export async function runBootstrap(args = process.argv.slice(2)) {
     });
   } finally { signals.forEach((signal, index) => process.off(signal, handlers[index])); }
 }
-if (process.argv[1] && pathToFileURL(await realpath(process.argv[1])).href === import.meta.url) {
+async function isMain() {
+  if (typeof import.meta.main === 'boolean') return import.meta.main;
+  if (!process.argv[1]) return false;
+  const [arg, module] = await Promise.all([stat(process.argv[1], { bigint: true }), stat(fileURLToPath(import.meta.url), { bigint: true })]);
+  return arg.dev === module.dev && arg.ino === module.ino;
+}
+if (await isMain()) {
   try { process.exitCode = await runBootstrap(); }
   catch (error) { process.stderr.write(`Atomic documentation: ${error.message}\n`); process.exitCode = 1; }
 }

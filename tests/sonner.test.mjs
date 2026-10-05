@@ -55,7 +55,7 @@ test('path narrows contents; depth and metadata filters preserve selected metada
 
 test('extension API is opt-in and preserves custom fields', async () => {
   const root = await fixture();
-  await writeFile(path.join(root, '.sonner.json'), JSON.stringify({ version: 1, extensions: [{ suffix: '.meta', module: 'metadata.mjs' }] }));
+  await writeFile(path.join(root, '.sonner.json'), JSON.stringify({ version: 1, extensions: [{ suffix: '.meta', module: './metadata.mjs' }] }));
   await writeFile(path.join(root, 'metadata.mjs'), 'export const apiVersion=1; export function extract(input) { if (!Object.isFrozen(input)) throw Error("mutable"); return {description: input.text.trim()}; }');
   await writeFile(path.join(root, 'asset.meta'), 'Moves on contact');
   assert.doesNotMatch((await run(root)).stdout, /description=/);

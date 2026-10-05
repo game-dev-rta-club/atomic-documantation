@@ -5,7 +5,7 @@ import { createHash, randomUUID } from 'node:crypto';
 import { mkdir, mkdtemp, readFile, realpath, rename, rm, stat, writeFile } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
-import { pathToFileURL } from 'node:url';
+import { fileURLToPath } from 'node:url';
 import { promisify } from 'node:util';
 
 const exec = promisify(execFile);
@@ -14,7 +14,7 @@ export const PACKAGE = '@game-dev-rta-club/atomic-documantation';
 export const PACKAGE_SPEC = `https://github.com/game-dev-rta-club/atomic-documantation/archive/refs/tags/v${VERSION}.tar.gz`;
 const BIN = 'implementation/cli/sonner.mjs';
 const RUNTIME_FILES = ["implementation/cli/sonner.mjs","implementation/sonner/project-reader.mjs","implementation/sonner/sonner-extension-worker.mjs","implementation/sonner/sonner-extensions.mjs","implementation/sonner/sonner-metadata.mjs","implementation/sonner/sonner-options.mjs","implementation/sonner/sonner-text.mjs","implementation/sonner/sonner.mjs","package.json"];
-const RUNTIME_HASH = '1947c6f230a562c90a02de997b3134b45d53e628685dc89fc7e8b1963fedc8c9';
+const RUNTIME_HASH = '3b5e996a17ebd7188219c15ed46ef5c431ecc2ad81dfa0cad93d4ec468767a45';
 
 export async function findNpmCli() {
   const directories = [path.dirname(process.execPath), ...(process.env.PATH ?? process.env.Path ?? '').split(path.delimiter)];
@@ -83,7 +83,13 @@ export async function runBootstrap(args = process.argv.slice(2)) {
     });
   } finally { signals.forEach((signal, index) => process.off(signal, handlers[index])); }
 }
-if (process.argv[1] && pathToFileURL(await realpath(process.argv[1])).href === import.meta.url) {
+async function isMain() {
+  if (typeof import.meta.main === 'boolean') return import.meta.main;
+  if (!process.argv[1]) return false;
+  const [arg, module] = await Promise.all([stat(process.argv[1], { bigint: true }), stat(fileURLToPath(import.meta.url), { bigint: true })]);
+  return arg.dev === module.dev && arg.ino === module.ino;
+}
+if (await isMain()) {
   try { process.exitCode = await runBootstrap(); }
   catch (error) { process.stderr.write(`Atomic documentation: ${error.message}\n`); process.exitCode = 1; }
 }

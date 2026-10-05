@@ -49,7 +49,8 @@ export function parseSonnerConfig(raw) {
     seen.add(extension.suffix);
   }
   return { include: paths("include", ["."]), exclude: paths("exclude", []),
-    extensions: [...extensions].sort((a, b) => b.suffix.length - a.suffix.length) };
+    extensions: extensions.map(extension => ({ ...extension, module: normalizeSonnerPath(extension.module) }))
+      .sort((a, b) => b.suffix.length - a.suffix.length) };
 }
 
 export function selectSonnerPaths(paths, config, options = {}) {
