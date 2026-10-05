@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import { fileURLToPath } from 'node:url';
-import { readFile } from 'node:fs/promises';
+import { readFile, realpath } from 'node:fs/promises';
 import { buildSonner } from '../sonner/sonner.mjs';
 import { formatSonnerText } from '../sonner/sonner-text.mjs';
 
@@ -53,7 +53,7 @@ export async function run(args) {
   const value = await buildSonner(options);
   process.stdout.write(json ? `${JSON.stringify(value)}\n` : formatSonnerText(value));
 }
-if (process.argv[1] === fileURLToPath(import.meta.url)) {
+if (process.argv[1] && await realpath(process.argv[1]) === fileURLToPath(import.meta.url)) {
   try { await run(process.argv.slice(2)); }
   catch (error) { process.stderr.write(`Sonner: ${error.code ? `${error.code}: ` : ''}${error.message}\n`); process.exitCode = 1; }
 }
