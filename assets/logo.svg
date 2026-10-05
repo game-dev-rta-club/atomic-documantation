@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" role="img" aria-labelledby="title desc">
+  <title id="title">Atomic Documentation</title>
+  <desc id="desc">Three small pages form a simple hierarchy. An amber dot marks their connection.</desc>
+  <g fill="none" stroke="#21867e" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="48" y="12" width="32" height="36" rx="5"/>
+    <rect x="16" y="76" width="32" height="36" rx="5"/>
+    <rect x="80" y="76" width="32" height="36" rx="5"/>
+    <path d="M64 48V64M32 76V64H96V76"/>
+  </g>
+  <g fill="none" stroke="#21867e" stroke-width="4" stroke-linecap="round">
+    <path d="M57 25H71M57 35H66M25 89H39M25 99H34M89 89H103M89 99H98"/>
+  </g>
+  <circle cx="64" cy="64" r="6" fill="#efb44b"/>
+</svg>

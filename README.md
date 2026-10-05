@@ -1,22 +1,30 @@
-# atomic-documantation
+<p align="center">
+  <img src="assets/logo.svg" width="112" height="112" alt="Atomic Documentation logo: three small pages connected by a folder hierarchy.">
+</p>
+
+<h1 align="center">Atomic Documentation</h1>
+
+<div align="center">
 
 [![CI](https://github.com/game-dev-rta-club/atomic-documantation/actions/workflows/ci.yml/badge.svg)](https://github.com/game-dev-rta-club/atomic-documantation/actions/workflows/ci.yml)
 [![Release](https://img.shields.io/github/v/release/game-dev-rta-club/atomic-documantation)](https://github.com/game-dev-rta-club/atomic-documantation/releases/latest)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-Two agent skills for documentation that is easy to write, understand and revisit. Organize short pages into a meaningful hierarchy, explain them to a 20-year-old new employee, and use Sonner to see the whole before opening the details.
+</div>
 
-## /atomic-doc-writing
+**Write docs people understand. Give agents a map to find them.**
 
-Writes and reorganizes specifications and guides into short, canonical pages. Clear filenames, concrete examples and useful `keyPoints` let readers find what they need without reading everything.
+Two skills for Codex, Claude Code and other [Agent Skills](https://agentskills.io)-compatible agents: clear documentation and a project overview that points to the right details.
 
-[Read the writing skill](skills/atomic-doc-writing/SKILL.md).
+## Write for a new teammate
 
-## /atomic-doc-reading
+The [writing skill](skills/atomic-doc-writing/SKILL.md) keeps each topic in a short page, organized into meaningful folders. Explain it to a 20-year-old new employee: plain language, concrete examples and one clear home for each explanation.
 
-Uses Sonner to understand a project through its folder tree and document previews, then reads the relevant pages in full. It works with ordinary Markdown and can include project-specific code or asset metadata through extensions.
+![Short pages and meaningful folders become a project map in Sonner. The reading skill uses the map to choose relevant pages, then reads them in full.](assets/overview.svg)
 
-[Read the reading skill](skills/atomic-doc-reading/SKILL.md).
+## Find the right page before reading
+
+The [reading skill](skills/atomic-doc-reading/SKILL.md) uses **Sonner** to see the folder tree and page previews, then opens the relevant pages in full.
 
 ```text
 Files:
@@ -24,22 +32,28 @@ Files:
     Delivery/
       retry.md keyPoints="Retries three times, then records a failed job."
     Accounts/
-      deletion.md keyPoints="Deletion removes access immediately; records expire after 30 days."
+      deletion.md keyPoints="Access ends immediately; records expire after 30 days."
 ```
 
-## Install
+Existing Markdown works as-is. Add a short English `keyPoints` preview to important pages to show their meaning beside the file path.
 
-Requires Node.js 24+, npm and Git on macOS, Windows or Linux. Use any agent that supports [Agent Skills](https://agentskills.io); Codex and Claude Code commands are shown below.
+<details>
+<summary>Add page previews or code metadata</summary>
 
-Run this from the project where you want to use the skills:
-
-```sh
-npx skills@latest add game-dev-rta-club/atomic-documantation
+```markdown
+---
+keyPoints: >-
+  Delivery retries three times, then records a failed job for manual retry.
+---
 ```
 
-Choose either or both skills and your target agents. Installation is project-local by default.
+For code and assets, use [project metadata extensions](skills/atomic-doc-reading/references/extensions.md).
 
-To install both for Codex and Claude Code without prompts:
+</details>
+
+## Install and use
+
+From your project, install both skills for Codex and Claude Code:
 
 ```sh
 npx skills@latest add game-dev-rta-club/atomic-documantation \
@@ -50,62 +64,30 @@ npx skills@latest add game-dev-rta-club/atomic-documantation \
   --yes
 ```
 
-Codex discovers `.agents/skills/`; Claude Code uses `.claude/skills/`. Newly installed skills become available when the agent refreshes its skill list, normally on the next turn in Codex Desktop.
-
-Each skill works on its own. Sonner is prepared automatically on first use, with no global command or project dependency setup. The first run needs network access; later cached runs work offline. Its implementation is pinned and integrity-checked against the installed skill release.
-
-## Use
-
-In Codex:
-
 ```text
 $atomic-doc-reading Understand this project before changing its delivery system.
-$atomic-doc-writing Organize the delivery documentation so a new employee can use it.
+$atomic-doc-writing Organize the delivery docs so a new teammate can use them.
 ```
 
-In Claude Code:
+In Claude Code, use `/atomic-doc-reading` and `/atomic-doc-writing` instead. Refresh your agent's skill list after installation.
 
-```text
-/atomic-doc-reading Understand this project before changing its delivery system.
-/atomic-doc-writing Organize the delivery documentation so a new employee can use it.
+**Requires:** Node.js 24+, npm and Git on macOS, Windows or Linux. Installation is project-local. Sonner is acquired automatically on first use, with no global command or project dependency setup. Cached runs work offline.
+
+<details>
+<summary>Choose another agent or just one skill</summary>
+
+```sh
+npx skills@latest add game-dev-rta-club/atomic-documantation
 ```
 
-Existing Markdown works as-is. Add English `keyPoints` to make important pages visible in the overview:
+Choose the skills and target agents. Each skill works on its own.
 
-```markdown
----
-keyPoints: >-
-  Delivery retries three times, then records a failed job for manual retry.
----
-```
-
-For code and assets, use [project metadata extensions](skills/atomic-doc-reading/references/extensions.md). There is no dependency on Small Loop or on a particular agent harness.
+</details>
 
 ## Update
 
-Updates are deliberate. Rerun the installation command when you want a newer release. There are no automatic runtime update checks; each installed skill selects its own release. [Release notes](CHANGELOG.md) describe changes.
+Rerun the install command when you want a newer release. Each skill uses its exact, integrity-checked Sonner version; there are no automatic updates. See the [release notes](CHANGELOG.md).
 
-## Development
+## Project
 
-```sh
-git clone https://github.com/game-dev-rta-club/atomic-documantation.git
-cd atomic-documantation
-npm run build
-npm test
-npm run check
-npm pack --dry-run
-```
-
-No dependency installation is required for development. The skills contain the guidance; `implementation/` contains the shared reader and acquisition code. Both use one version. See the [product contract](specification/product.md) for the small public surface.
-
-## Contributing
-
-Focused issues and pull requests are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md), the [Code of Conduct](CODE_OF_CONDUCT.md) and [security policy](SECURITY.md).
-
-## Maintainers
-
-[Game Dev RTA Club](https://github.com/game-dev-rta-club)
-
-## License
-
-[MIT](LICENSE) © 2026 Game Dev RTA Club. Attribution is recorded in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+[Game Dev RTA Club](https://github.com/game-dev-rta-club) · [MIT](LICENSE) · [Contributing](CONTRIBUTING.md) · [Code of Conduct](CODE_OF_CONDUCT.md) · [Security](SECURITY.md) · [Attribution](THIRD_PARTY_NOTICES.md)

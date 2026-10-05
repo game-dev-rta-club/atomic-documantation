@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="340" viewBox="0 0 1400 340" role="img" aria-labelledby="title desc">
+  <title id="title">Clear pages become a useful project map</title>
+  <desc id="desc">The writing skill organizes short pages in meaningful folders. Sonner exposes the folder tree and page previews. The reading skill chooses relevant pages and reads their details in full.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M1 1L9 5L1 9" fill="none" stroke="#21867e" stroke-width="2" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+  <rect width="1400" height="340" rx="28" fill="#f7f5ee"/>
+  <g font-family="Arial, Helvetica, sans-serif">
+    <rect x="60" y="34" width="1280" height="64" rx="16" fill="#153d3b"/>
+    <text x="700" y="76" text-anchor="middle" font-size="26" font-weight="700" fill="#fff">Understand the whole. Open the details.</text>
+    <g fill="#fff" stroke="#d6e4df" stroke-width="2">
+      <rect x="60" y="130" width="355" height="164" rx="20"/>
+      <rect x="522" y="130" width="355" height="164" rx="20"/>
+      <rect x="984" y="130" width="355" height="164" rx="20"/>
+    </g>
+    <g fill="#56726d" font-size="16" font-weight="700" letter-spacing="2">
+      <text x="87" y="165">WRITING SKILL</text>
+      <text x="549" y="165">SONNER</text>
+      <text x="1011" y="165">READING SKILL</text>
+    </g>
+    <g fill="#0b5450" font-size="29" font-weight="700">
+      <text x="87" y="210">Short pages</text>
+      <text x="549" y="210">Project map</text>
+      <text x="1011" y="210">Relevant details</text>
+    </g>
+    <g fill="#536c66" font-size="22">
+      <text x="87" y="251">Clear topics + folders</text>
+      <text x="549" y="251">Paths + page previews</text>
+      <text x="1011" y="251">Choose, then read in full</text>
+    </g>
+    <path d="M431 212H502" fill="none" stroke="#21867e" stroke-width="3" marker-end="url(#arrow)"/>
+    <path d="M894 212H965" fill="none" stroke="#21867e" stroke-width="3" marker-end="url(#arrow)"/>
+  </g>
+</svg>

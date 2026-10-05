@@ -38,9 +38,14 @@ test('skills contain no project-specific paths, sibling dependencies or broken l
 test('generated runners and shared reference are up to date', async () => {
   await exec(process.execPath, ['scripts/build-skills.mjs', '--check'], { cwd: root });
 });
-test('repository Markdown links resolve', async () => {
+test('repository Markdown links and HTML images resolve', async () => {
   for (const filename of await markdown(root)) {
-    for (const match of (await readFile(filename, 'utf8')).matchAll(/\[[^\]]+\]\(([^)]+)\)/g)) {
+    const source = await readFile(filename, 'utf8');
+    const links = [
+      ...source.matchAll(/\[[^\]]+\]\(([^)]+)\)/g),
+      ...source.matchAll(/<img\b[^>]*\bsrc="([^"]+)"/g),
+    ];
+    for (const match of links) {
       const target = match[1];
       if (/^https?:/.test(target) || target.startsWith('#')) continue;
       await access(path.resolve(path.dirname(filename), target.split('#')[0]));

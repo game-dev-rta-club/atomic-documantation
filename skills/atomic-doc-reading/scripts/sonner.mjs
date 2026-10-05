@@ -9,12 +9,12 @@ import { fileURLToPath } from 'node:url';
 import { promisify } from 'node:util';
 
 const exec = promisify(execFile);
-export const VERSION = '0.1.0';
+export const VERSION = '0.1.1';
 export const PACKAGE = '@game-dev-rta-club/atomic-documantation';
 export const PACKAGE_SPEC = `https://github.com/game-dev-rta-club/atomic-documantation/archive/refs/tags/v${VERSION}.tar.gz`;
 const BIN = 'implementation/cli/sonner.mjs';
 const RUNTIME_FILES = ["implementation/cli/sonner.mjs","implementation/sonner/project-reader.mjs","implementation/sonner/sonner-extension-worker.mjs","implementation/sonner/sonner-extensions.mjs","implementation/sonner/sonner-metadata.mjs","implementation/sonner/sonner-options.mjs","implementation/sonner/sonner-text.mjs","implementation/sonner/sonner.mjs","package.json"];
-const RUNTIME_HASH = '3b5e996a17ebd7188219c15ed46ef5c431ecc2ad81dfa0cad93d4ec468767a45';
+const RUNTIME_HASH = '3049577d001cb5c4a5bb9833cb408b5af5d10f940276a61d48aabcebcc6e7a57';
 
 export async function findNpmCli() {
   const directories = [path.dirname(process.execPath), ...(process.env.PATH ?? process.env.Path ?? '').split(path.delimiter)];
